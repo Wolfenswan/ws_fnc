@@ -94,6 +94,9 @@ if (_thrsh <= 0) then {_thrsh = 0.1};
 // Create a new group
 _grp = createGroup _side;
 
+// Give the group a hold waypoint as otherwise ASR_AI might call them outside
+[_grp,_area,["hold"]] call ws_fnc_addWaypoint;
+
 for "_x" from 1 to _int do {
 	private ["_b","_bpa","_bpl","_bu","_i","_u","_dir"];
 
@@ -159,7 +162,11 @@ for "_x" from 1 to _int do {
 
 };
 
-_grp enableAttack false; // Prevent the group leader to issue attack orders to the members, improving their attack from buildings
+// Prevent the group leader to issue attack orders to the members, improving their attack from buildings
+_grp enableAttack false;
+
+// Set the group's attack mode and stance
+[_grp,"AWARE","YELLOW"] call ws_fnc_setAIMode;
 
 // Return created unis
 (units _grp)

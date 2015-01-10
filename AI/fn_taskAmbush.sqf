@@ -17,30 +17,30 @@ PARAMETERS
 1. The ambush group                                                                | MANDATORY
 2. The position to be ambushed                                                     | MANDATORY - can be marker, object, group or positional array
 3. The killzone in [x,y]around the position (if enemies enter, the group engages)  | OPTIONAL (default: [50,50])
-4. The radius in which to find a spot overlooking the ambush site                  | OPTIONAL (default: 400)
+4. The radius in which to find a spot overlooking the ambush site                  | OPTIONAL (default: 300)
 5. The minimal distance the overwatch has to be from the ambush location           | OPTIONAL (default: 100)
 */
 
 if !(ws_game_a3) exitWith {["ws_fnc_taskAmbush DBG:",[]," Must be ARMA 3!"] call ws_fnc_debugtext};
 
-private ["_debug","_grp","_pos","_nPos","_killzone","_radius","_mindis","_side","_sidesEnemy","_wp","_mkr"];
+private ["_debug","_grp","_pos","_nPos","_killzone","_radius","_mindis","_sidesEnemy","_wp","_mkr"];
 
 // Debug. If ws_debug is globally defined it overrides _debug
 _debug = if !(isNil "ws_debug") then {ws_debug} else {false};
 
 _count = count _this;
 _grp = _this select 0;
-_pos = (_this select 1) call ws_fnc_getEpos;
+//_pos = [_this select 1] call ws_fnc_getPosInArea;
+_killzone = _this select 1;
 
-_killzone = if (_count > 2) then {_this select 2} else {[50,50]};
-_radius = if (_count > 3) then {_this select 3} else {400};
-_mindis = if (_count > 4) then {_this select 4} else {100};
+//_killzone = if (_count > 2) then {_this select 2} else {[50,50]};
+_radius = if (_count > 2) then {_this select 3} else {300};
+_mindis = if (_count > 3) then {_this select 4} else {100};
 
 if (_mindis > _radius) then {_radius = _mindis * 4};
 
 // Get enemy sides
-_side = side _grp;
-_sidesEnemy = _side call BIS_fnc_enemySides;
+_sidesEnemy = (side _grp) call BIS_fnc_enemySides;
 
 // Get a position overwatching the ambush point
 _nPos = [_pos, _radius, _mindis, 10] call BIS_fnc_findOverwatch;
@@ -51,26 +51,36 @@ _grp setCurrentWaypoint _wp;
 
 // Set group to go stealth at overwatch position
 _wp = [_grp,_nPos,["HOLD",0,10],["STEALTH","GREEN","NORMAL"]] call ws_fnc_addWaypoint;
+_killzone setTriggerStatements ["this", "{_grp reveal [_x,4]} forEach thisList", ""];
+_killzone synchronizeTrigger [_wp];
 
-// Create switch triggers for each enemy side and synch them to overwatch-hold waypoint
+// Create switch triggers for each enemy side and synch them to the overwatch waypoint
 {
+    /*
     _trg = createTrigger ["EmptyDetector", _pos];
     _trg setTriggerArea [_killzone select 0,_killzone select 1,0,false];
     _trg setTriggerActivation [str(_x), "PRESENT", false];
     _trg setTriggerStatements ["this", "", ""];
     _trg setTriggerType "SWITCH";
     _trg synchronizeTrigger [_wp];
+    */
 
     _trg = createTrigger ["EmptyDetector", _nPos];
     _trg setTriggerArea [25,25,0,false];
     _trg setTriggerActivation [str(_x), "PRESENT", false];
-    _trg setTriggerStatements ["this", "", ""];
+    _trg setTriggerStatements ["this", "{_grp reveal [_x,4]} forEach thisList", ""];
     _trg setTriggerType "SWITCH";
     _trg synchronizeTrigger [_wp];
+
 } forEach _sidesEnemy;
 
 // Create attack waypoint (becomes active once trigger flips)
-[_grp,_Pos,["SAD",0],["AWARE","RED","FULL"]] call ws_fnc_addWaypoint;
+_wp = [_grp,_pos,["SAD",0],["AWARE","RED","FULL"]] call ws_fnc_addWaypoint;
+
+// Make all targets near the attack WP known to the ambushers
+/*{
+    _grp reveal [_x,4];
+} forEach (_killzone nearEntities ((triggerArea _killzone) select 0 max (triggerArea _killzone) select 1));*/
 
 // If debug's enabled, place markers
 if (_debug) then {
