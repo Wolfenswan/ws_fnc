@@ -58,6 +58,11 @@ if !(_helo isKindOf "Helicopter") exitWith {["ws_fnc_taskLand:",[_helo]," must b
 _pilot = driver _helo;
 _grp = group _pilot;
 
+// Exit if the helicopter is called where it isn't local
+if !(local _pilot) exitWith {
+    if (_debug) then {["ws_fnc_taskLand: Helo ",[_helo]," is not local!"] call ws_fnc_debugtext};
+};
+
 // Get helicopter to move towards the position
 _helo doMove _pos;
 
