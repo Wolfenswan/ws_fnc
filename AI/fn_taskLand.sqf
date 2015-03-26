@@ -79,9 +79,9 @@ if (!canMove _helo || !alive _helo || !alive _pilot) exitWith {
 
 // Set up helicopter
 // NOTE: experiment with dis-/enabling stuff here, to achieve the ideal landing w/o gimping AI too much
-//_pilot disableai "AUTOTARGET"; _pilot disableai "TARGET";
-//_grp enableAttack false;
-_pilot setBehaviour "CARELESS";
+_pilot disableai "AUTOTARGET"; _pilot disableai "TARGET";
+_grp enableAttack false;
+//_pilot setBehaviour "CARELESS";
 _pilot allowFleeing 0;
 
 // Create an invisible helipad at location
@@ -141,5 +141,6 @@ deleteVehicle _hp;
 
 // Re-Enable normal pilot behaviour
 _pilot enableai "AUTOTARGET"; _pilot enableai "TARGET";
+_grp enableAttack true;
 
 true
