@@ -11,6 +11,9 @@ Afterwards it will move to the designated location.
 RETURNS
 true - after helicopter has taken off again
 
+NOTE
+Function should only be spawned where helicopter is local
+
 USAGE
 Minimal:
 [helicopter,landing position] spawn ws_fnc_taskLand;
