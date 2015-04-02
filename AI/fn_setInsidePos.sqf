@@ -15,10 +15,6 @@ PARAMETERS
 
 RETURNS
 true
-
-TODO
-optimize/debug some facings
-test if kneeling leads to false results
 */
 
 private ["_u","_b","_udir","_inside","_facingwall","_dirtob","_dir"];
@@ -35,10 +31,12 @@ _facingwall = false;
 _dirtob = [_u,_b] call BIS_fnc_RelativeDirTo;
 _udir = _dirtob - 180;
 
+// If unit is outside set to kneel and check for wall facing away from building
 if !(_inside) then {
 	_u setUnitPos "Middle";
 	_facingwall = [_u,_udir] call ws_fnc_isWallInDir;
 } else {
+// Else if unit is inside set position to standing and check for wall from facing of unit
 	_u setUnitPos "Up";
 	_facingwall = [_u,getDir _u] call ws_fnc_isWallInDir;
 };
@@ -48,15 +46,7 @@ if (_facingwall) then {
 	// First check if there's a window nearby
 	for [{_x=0},{_x<=360},{_x=_x+10}] do {
 		_dir = _x;
-		if !([_u,_dir,8] call ws_fnc_isWallInDir) exitWith {_udir = _dir;_facingwall = false};
-	};
-
-	// If no window was found, check for longer distance
-	if (_facingwall) then {
-		for [{_x=0},{_x<=360},{_x=_x+10}] do {
-			_dir = _x;
-			if !([_u,_dir,20] call ws_fnc_isWallInDir) exitWith {_udir = _dir;_facingwall = false};
-		};
+		if !([_u,_dir] call ws_fnc_isWallInDir) exitWith {_udir = _dir;_facingwall = false};
 	};
 
 	// If still no good facing was good, simply set the unit to face inward
