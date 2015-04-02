@@ -18,6 +18,7 @@ true
 
 TODO
 optimize/debug some facings
+test if kneeling leads to false results
 */
 
 private ["_u","_b","_udir","_inside","_facingwall","_dirtob","_dir"];
