@@ -23,7 +23,11 @@ optimize/debug some facings
 private ["_u","_b","_udir","_inside","_facingwall","_dirtob","_dir"];
 
 _u = _this;
-_b = nearestBuilding _u;
+_nb = (nearestObjects [_u,["BagBunker_base_F","HouseBase"],50]);
+
+if (count _nb == 0) exitWith {};
+
+_b = _nb select 0;
 
 _inside = [_u,0,0,25] call ws_fnc_isWallInDir;
 _facingwall = false;

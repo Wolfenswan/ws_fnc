@@ -36,5 +36,5 @@ _height = if (count _this > 3) then [{_this select 3},{0}];
 
 _relpos = [[_pos select 0,_pos select 1,(_pos select 2) + _height], _dis, _dir] call BIS_fnc_relPos;
 
-_intersects = lineIntersectsObjs [_posASL,ATLTOASL _relpos,objnull,objNull,false];
-if (count _intersects > 0 && {(({_x isKindOf "House_F"} count _intersects) > 0)}) then [{true},{false}];
+_intersects = lineIntersectsObjs [_posASL,ATLTOASL _relpos];
+if (count _intersects > 0 && {(({(_x isKindOf "HouseBase" || _x isKindOf "BagBunker_base_F")} count _intersects) > 0)}) then [{true},{false}];
