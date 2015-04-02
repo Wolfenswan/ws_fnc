@@ -44,7 +44,7 @@ if !(_inside) then {
 if (_facingwall) then {
 
 	// First check if there's a window nearby
-	for [{_x=0},{_x<=360},{_x=_x+10}] do {
+	for [{_x=0},{_x<=360},{_x=_x+5}] do {
 		_dir = _x;
 		if !([_u,_dir] call ws_fnc_isWallInDir) exitWith {_udir = _dir;_facingwall = false};
 	};
