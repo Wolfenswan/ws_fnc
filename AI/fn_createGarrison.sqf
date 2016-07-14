@@ -18,9 +18,9 @@ Make sure to call this only on the server or headless client. The function itsel
 PARAMETERS:
 1. Center of town. Can be marker, object or location     | MANDATORY - string (markername) or object name
 2. Radius of area to be considered																				 | MANDATORY - int
-3. Side of units to spawn																						 | MANDATORY - side (east, west, resistance)
+3. Side of units to spawn																						 | MANDATORY - side (east, west, independent, civilian)
 4. Number of units.																								 | OPTIONAL - number - default is No. of available buildings/4
-5. threshold of building positions that can be occupied in the buildings in the area								 | OPTIONAL - number between 1 (=100%) and 0, default is set below
+5. threshold of building positions that can be occupied in the buildings in the area							 | OPTIONAL - number between 1 (=100%) and 0, default is set below
 6. Array of classes to spawn																		           	 | OPTIONAL - array w. strings  - default are classes defined below
 
 EXAMPLE
@@ -33,19 +33,37 @@ array of created units
 */
 
 // DECLARE VARIABLES
-private ["_garrisonNATO","_garrisonCSAT","_garrisonAAF","_garrisonFIA","_garrisonCIV","_threshold","_debug","_area","_radius","_side","_classes","_buildings","_int","_grp","_thrsh","_casses"];
+private ["_garrisonWest","_garrisonEast","_garrisonIndp","_garrisonCIV","_threshold","_debug","_area","_radius","_side","_int","_thrsh","_classes","_buildings","_grp"];
 
 // Default classes (Arma 3)
+// To change which units are spawned for which side, replace the array or add additional units to it
+
 // NATO
-_garrisonNATO = ["B_Soldier_lite_F","B_Soldier_F"];
+_garrisonWest = ["B_Soldier_lite_F","B_Soldier_F"];
+
 // CSAT
-_garrisonCSAT = ["O_Soldier_lite_F","O_Soldier_F"];
+_garrisonEast = ["O_Soldier_lite_F","O_Soldier_F"];
+
 // AAF
-_garrisonAAF = ["I_Soldier_lite_F","I_Soldier_F"];
-// FIA
-_garrisonFIA = ["B_G_Soldier_lite_F","B_G_Soldier_F"];
+_garrisonIndp = ["I_Soldier_lite_F","I_Soldier_F"];
+
 // CIVILIAN
 _garrisonCIV = [""];
+
+// NATO PAcific
+// ["B_T_Soldier_F"]
+
+// CSAT Pacific
+// ["O_T_Soldier_F"];
+
+// Syndikat Paramilitary
+// ["I_C_Soldier_Para_1_F","I_C_Soldier_Para_2_F","I_C_Soldier_Para_7_F"];
+
+// Syndikat Bandit
+// ["I_C_Soldier_Bandit_4_F","I_C_Soldier_Bandit_7_F","I_C_Soldier_Bandit_5_F"];
+
+// FIA
+// ["B_G_Soldier_lite_F","B_G_Soldier_F"];
 
 _threshold = 0.8; // Default percentage of building positions that can be taken in any given building (1=all)
 
@@ -55,7 +73,7 @@ _debug = if !(isNil "ws_debug") then {ws_debug} else {false};
 // Declare Variables
 _area = (_this select 0) call ws_fnc_getEPos;
 _radius = _this select 1;
-_side = _this select 2;
+_side = (_this select 2);
 _int = if (count _this > 3) then {_this select 3} else {0};
 _thrsh = if (count _this > 4) then {_this select 4} else {_threshold};
 _classes = if (count _this > 5) then {_this select 5} else {[]};
@@ -68,14 +86,14 @@ _classes = if (count _this > 5) then {_this select 5} else {[]};
 
 // If default classes are being used, select the corresponding array
 if (count _classes == 0) then {
-	switch (_side) do {
-		case west: {_classes = _garrisonNATO};
-		case blufor: {_classes = _garrisonNATO};
-		case east: {_classes = _garrisonCSAT};
-		case opfor: {_classes = _garrisonCSAT};
-		case resistance: {_classes = _garrisonAAF};
-		case independent: {_classes = _garrisonAAF};
-		case civilian: {_classes = _garrisonCIV};
+	_classes = switch (_side) do {
+		case west: {_garrisonWest};
+		case blufor: {_garrisonWest};
+		case east: {_garrisonEast};
+		case opfor: {_garrisonEast};
+		case resistance: {_garrisonIndp};
+		case independent: {_garrisonIndp};
+		case civilian: {_garrisonCIV};
 	};
 };
 

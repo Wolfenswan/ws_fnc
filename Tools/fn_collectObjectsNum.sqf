@@ -5,7 +5,7 @@ FEATURE
 Collects all existing objects that are copies of the original, as indicated by an appended number (Obj,Obj_1,Obj_2 etc.)
 
 USAGE
-[Object1,Object2] call ws_fnc_collectObjects
+[Object1,Object2] call ws_fnc_collectObjectsNum
 
 RETURNS
 Array of all existing objects that share the name
