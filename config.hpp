@@ -27,6 +27,7 @@ class WS
 			class listPlayers {};
 			class setGVar {};
 			class isWallInDir {};
+			class getObjectClasses {};
 		};
 		class effects
 		{

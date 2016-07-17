@@ -35,6 +35,8 @@ array of created units
 // DECLARE VARIABLES
 private ["_garrisonWest","_garrisonEast","_garrisonIndp","_garrisonCIV","_threshold","_debug","_area","_radius","_side","_int","_thrsh","_classes","_buildings","_grp"];
 
+_threshold = 0.8; // Default percentage of building positions that can be taken in any given building (1=all)
+
 // Default classes (Arma 3)
 // To change which units are spawned for which side, replace the array or add additional units to it
 
@@ -64,8 +66,6 @@ _garrisonCIV = [""];
 
 // FIA
 // ["B_G_Soldier_lite_F","B_G_Soldier_F"];
-
-_threshold = 0.8; // Default percentage of building positions that can be taken in any given building (1=all)
 
 // Debug. If ws_debug is globally defined it overrides _debug
 _debug = if !(isNil "ws_debug") then {ws_debug} else {false};
