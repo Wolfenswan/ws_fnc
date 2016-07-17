@@ -20,6 +20,8 @@ _debug = false; if !(isNil "ws_debug") then {_debug = ws_debug};
 _badarray = [];
 
 _building = _this select 0;
+
+if isNil "_building" exitWith {};
 _bposarray = _building getVariable ["ws_bPos",false];
 [_building,["OBJECT"],format ["ws_fnc_getBpos: %1",_building]] call ws_fnc_typecheck;
 _i = 0;
