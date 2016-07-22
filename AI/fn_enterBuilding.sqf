@@ -60,8 +60,7 @@ while {count _units > 0 && count _barray > 0} do {
 		//Get a building position and remove it from the array
 		_i = floor (random (count _bposleft));
 		_bpos = _bposleft select _i;
-		_bposleft set [_i,0];			//Workaround as in http://community.bistudio.com/wiki/Array#Subtraction
-		_bposleft = _bposleft - [0];
+		_bposleft deleteAt _i;
 
 		// Set the new variables for the building
 		_building setVariable ["ws_bPosLeft",_bposleft,true];

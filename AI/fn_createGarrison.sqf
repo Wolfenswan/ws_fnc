@@ -157,8 +157,7 @@ for "_x" from 1 to _int do {
 	_bp = _bpl select _i;
 
 	// Remove the building position from the array
-	_bpl set [_i,0];			//Workaround as in http://community.bistudio.com/wiki/Array#Subtraction
-	_bpl = _bpl - [0];
+	_bpl deleteAt _i;
 
 	// Create a unit and move it into place
   	_u = _grp createUnit [selectRandom _classes,_area,[],5,"NONE"];
