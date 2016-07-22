@@ -1,4 +1,4 @@
-//ws_fnc_selectRandom
+//ws_fnc_shuffleArray
 /*
 FEATURE
 Shuffles given array
