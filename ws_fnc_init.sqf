@@ -38,7 +38,6 @@ if !(ws_game_a3) then {
 	call compile preprocessFile "ws_fnc\dbg\fn_debugTriggers.sqf";
 
 	//Tool Functions
-	ws_fnc_selectRandom = compile preprocessfile "ws_fnc\tools\fn_selectRandom.sqf";
 	ws_fnc_collectMarkers =  compile preprocessfile "ws_fnc\tools\fn_collectMarkers.sqf";
 	ws_fnc_collectObjects =  compile preprocessfile "ws_fnc\tools\fn_collectObjects.sqf";
 	ws_fnc_collectObjectsNum =  compile preprocessfile "ws_fnc\tools\fn_collectObjectsNum.sqf";

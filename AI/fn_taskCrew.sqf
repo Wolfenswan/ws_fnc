@@ -43,7 +43,7 @@ _units2 = _units - [leader _group];
 {
 	// Make sure it doesn't have a gunner yet
 	if (isNull (gunner _x) && isNUll (_x getVariable ["ws_StaticCrew",objNull])) then {
-		_unit = _units2 call ws_fnc_selectRandom;
+		_unit = selectRandom _units2;
 		_unit assignasgunner _x;
 		[_unit] ordergetin true;
 		_units = _units - [_unit];
