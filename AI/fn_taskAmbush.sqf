@@ -37,7 +37,7 @@ _count = count _this;
 _grp = _this select 0;
 _ambush = _this select 1;
 _killzone = if (_count > 2) then [{_this select 2},{[]}];
-_owatch = if (_count > 3) then [{_this select 3},{[50,400]}];
+_owatch = if (_count > 3) then [{_this select 3},{[50,200]}];
 
 // Get positions for group and ambush location
 _pos = _ambush call ws_fnc_getEPos;
@@ -74,7 +74,7 @@ if (count _owatch > 0) then {
     if (_mindis > _radius) then {_radius = _mindis * 4};
 
     // Get a position overwatching the ambush point
-    _nPos = [_pos, _radius, _mindis, 10] call BIS_fnc_findOverwatch;
+    _nPos = [_pos, _radius, _mindis, 0] call BIS_fnc_findOverwatch;
 };
 
 // Get group to move to overwatch position

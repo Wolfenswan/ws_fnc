@@ -40,7 +40,7 @@ private ["_debug","_game","_count","_milarrayA2","_badarrayA2","_badarrayA3","_m
 
 //Customizable Variables
 _mthreshold = 1; // Percentage of building positions to occupy in military buildings (1=all)
-_cthreshold = 0.8; // Percentage of building positions to occupy in civilian buildings (1=all)
+_cthreshold = 1; // Percentage of building positions to occupy in civilian buildings (1=all)
 
 // ARMA 2 only
 // Military buildings that are garrisoned before civilian buildings

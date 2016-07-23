@@ -42,7 +42,9 @@ _code = {};
 //Optional parameters parsed with the call
 if (_count > 4) then {_code = _this select 4;};
 
-["ws_fnc_createGroup DBG: running with: ",_this,""] call ws_fnc_debugText;
+if (_debug) then {
+	["ws_fnc_createGroup DBG: running with: ",_this,""] call ws_fnc_debugText;
+};
 
 //Fault checks
 //Checking the variables we have enough against what we should have
