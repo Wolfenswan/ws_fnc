@@ -14,7 +14,6 @@ class WS
 		class tools
 		{
 			file = "ws_fnc\tools";
-			class selectRandom {};
 			class gameCheck {preInit=1;};
 			class collectMarkers {};
 			class collectObjects {};
@@ -83,10 +82,6 @@ class WS
 			class gCache {};
 			class gUncache {};
 			class cTracker {};
-		};
-
-		class init {
-			class init {file = "ws_fnc\ws_fnc_init.sqf";preInit = 1;};
 		};
 
 	};
